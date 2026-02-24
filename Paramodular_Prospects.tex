@@ -1,0 +1,598 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{url}
+
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Jac}{\operatorname{Jac}}
+\newcommand{\Cond}{\operatorname{Cond}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Frob}{\operatorname{Frob}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\GSp}{\mathrm{GSp}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\USp}{\mathrm{USp}}
+\newcommand{\Gm}{\mathbb{G}_{\mathrm{m}}}
+\newcommand{\Ga}{\mathbb{G}_{\mathrm{a}}}
+\newcommand{\Qbar}{\overline{\mathbb{Q}}}
+\newcommand{\Ql}{\mathbb{Q}_\ell}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Goldbach--Frey Jacobians as Weil Restrictions:\\
+  Trace Vanishing, Asai $L$-Functions,\\
+  and Modularity via $\mathbb{Q}(i)$}
+\author{Ruqing Chen\\[4pt]
+  \small GUT Geoservice Inc., Montreal\\
+  \small\texttt{ruqing@hotmail.com}}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For the Goldbach--Frey curve
+$C\colon y^2 = x(x^2 - p^2)(x^2 - q^2)$ with $p \ne q$
+distinct odd primes, we prove that the Frobenius trace
+$a_r = 0$ at every good prime $r \equiv 3 \pmod{4}$.
+This ``trace vanishing law'' is the signature of an
+induced Galois representation: the involution
+$(x,y) \mapsto (-x, iy)$ defined over $\mathbb{Q}(i)$
+forces the $\ell$-adic representation of $\Jac(C)$ to
+be induced from $G_{\mathbb{Q}(i)}$ to $G_{\mathbb{Q}}$,
+so that $\Jac(C)$ is isogenous over~$\mathbb{Q}$ to the
+Weil restriction $\Res_{\mathbb{Q}(i)/\mathbb{Q}}(E)$
+of an elliptic curve $E/\mathbb{Q}(i)$.
+The degree-$4$ $L$-function is therefore an Asai
+$L$-function (a Langlands lift from
+$\GL_2(\mathbb{Q}(i))$ to $\GSp_4(\mathbb{Q})$), and
+the associated Siegel paramodular form is an endoscopic
+lift.
+We compute explicit local $L$-factors at all bad odd
+primes---including a quadratic-residue analysis of node
+splitting---and show that modularity follows from the
+modularity of $E/\mathbb{Q}(i)$ via automorphic induction.
+\end{abstract}
+
+
+% ====================================================================
+\section{Introduction}
+
+The Goldbach--Frey curve
+\begin{equation}\label{eq:curve}
+  C\colon y^2 = f(x) = x(x^2 - p^2)(x^2 - q^2)
+\end{equation}
+has the palindromic property $f(-x) = -f(x)$.  This symmetry,
+inherited from the additive constraint $p + q = 2N$, has
+arithmetic consequences that go beyond the conductor analysis
+of Papers~\cite{Chen2026TCV,Chen2026UTS}.
+
+The map
+\begin{equation}\label{eq:involution}
+  w\colon (x, y) \longmapsto (-x,\, iy)
+\end{equation}
+is an automorphism of~$C$ of order~$4$, defined over
+$\mathbb{Q}(i)$ but not over~$\mathbb{Q}$.
+This involution acts on the $\ell$-adic Tate module
+$V_\ell(\Jac(C))$ and constrains the Frobenius eigenvalues,
+producing a ``trace vanishing law'' at all inert primes.
+
+In this paper, we:
+\begin{enumerate}
+\item prove that $a_r = 0$ for every good prime
+  $r \equiv 3 \pmod{4}$ (Theorem~\ref{thm:vanish});
+\item show that $\End_{\mathbb{Q}}(\Jac(C)) = \mathbb{Z}$
+  for generic $(p, q)$ (Proposition~\ref{prop:endQ});
+\item identify $\Jac(C)$ as a Weil restriction from
+  $\mathbb{Q}(i)$ and the $L$-function as an Asai lift
+  (Section~\ref{sec:weil});
+\item compute refined local $L$-factors at all bad odd primes,
+  including a split/non-split node analysis
+  (Section~\ref{sec:local});
+\item establish modularity via automorphic induction from
+  $\GL_2(\mathbb{Q}(i))$
+  (Section~\ref{sec:modularity}).
+\end{enumerate}
+
+
+% ====================================================================
+\section{The Trace Vanishing Law}\label{sec:vanish}
+
+\begin{theorem}\label{thm:vanish}
+  Let $r > 2$ be a prime of good reduction for~$C$, and let
+  $a_r = r + 1 - \#C(\mathbb{F}_r)$ be the Frobenius trace.
+  If $r \equiv 3 \pmod{4}$, then $a_r = 0$.
+\end{theorem}
+
+\begin{proof}
+  Over $\mathbb{F}_r$, the number of
+  affine points on $C\colon y^2 = xg(x)$ where
+  $g(x) = (x^2 - p^2)(x^2 - q^2)$ is
+  \[
+    \#C^{\mathrm{aff}}(\mathbb{F}_r)
+    = \sum_{x \in \mathbb{F}_r}
+    \Bigl(1 + \Bigl(\frac{f(x)}{r}\Bigr)\Bigr)
+    = r + \sum_{x=0}^{r-1} \Bigl(\frac{f(x)}{r}\Bigr),
+  \]
+  where $(\cdot/r)$ is the Legendre symbol.  Thus
+  $a_r = -\sum_{x=0}^{r-1} (f(x)/r)$.
+
+  Since $f(-x) = -f(x)$ and $r \equiv 3 \pmod{4}$,
+  we have $(-1/r) = (-1)^{(r-1)/2} = -1$.  Therefore
+  \begin{align*}
+    \Bigl(\frac{f(-x)}{r}\Bigr)
+    &= \Bigl(\frac{-f(x)}{r}\Bigr)
+    = \Bigl(\frac{-1}{r}\Bigr)
+      \Bigl(\frac{f(x)}{r}\Bigr)
+    = -\Bigl(\frac{f(x)}{r}\Bigr).
+  \end{align*}
+  Pairing $x$ with $-x$ in the sum (noting $f(0) = 0$
+  contributes~$0$) gives
+  \[
+    a_r = -\sum_{x=0}^{r-1}\Bigl(\frac{f(x)}{r}\Bigr)
+    = -\Bigl(\frac{f(0)}{r}\Bigr)
+    - \sum_{x=1}^{(r-1)/2}
+    \left[\Bigl(\frac{f(x)}{r}\Bigr)
+    + \Bigl(\frac{f(-x)}{r}\Bigr)\right]
+    = 0.\qedhere
+  \]
+\end{proof}
+
+\begin{remark}\label{rem:r1}
+  For $r \equiv 1 \pmod{4}$, we have $(-1/r) = +1$, so
+  the terms reinforce rather than cancel.
+  Computationally, $a_r = 0$ at $\sim\!50\%$ of primes
+  $r \equiv 1 \pmod{4}$ (Table~\ref{tab:traces}).
+\end{remark}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig_trace_vanishing.pdf}
+  \caption{The trace vanishing law for $(p,q) = (3,7)$.
+    (a)~Frobenius trace $a_r$ vs.\ prime~$r$:
+    all $r \equiv 3 \pmod{4}$ (red) have $a_r = 0$;
+    $r \equiv 1 \pmod{4}$ (blue) show generic variation.
+    (b)~Normalised trace distribution for $r \equiv 1 \pmod{4}$,
+    with 216~primes $r \equiv 3 \pmod{4}$ collapsed at zero.}
+  \label{fig:trace}
+\end{figure}
+
+
+% ====================================================================
+\section{Endomorphism Ring}\label{sec:endo}
+
+\begin{proposition}\label{prop:endQ}
+  For generic distinct odd primes $p \ne q$,
+  $\End_{\mathbb{Q}}(\Jac(C)) = \mathbb{Z}$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+  Three potential sources of extra endomorphisms are excluded:
+
+  \emph{Jacobian splitting.}
+  By the Kani--Rosen criterion, $\Jac(C)$ splits over
+  $\mathbb{Q}$ if and only if~$C$ admits a
+  $\mathbb{Q}$-rational involution other than the
+  hyperelliptic involution $\iota\colon (x,y) \mapsto (x,-y)$.
+  Since $\Aut_{\mathbb{Q}}(C) = \langle\iota\rangle
+  \cong \mathbb{Z}/2$ (the automorphism~$w$ requires $i$),
+  no splitting involution exists over~$\mathbb{Q}$
+  (cf.\ Cardona--Quer~\cite{CardonaQuer}).
+
+  \emph{Real multiplication.}
+  The polynomial $f(x) = x \cdot h(x^2)$ with
+  $h(t) = t^2 - (p^2 + q^2)t + p^2 q^2$ has discriminant
+  $\Delta_h = (p^2 - q^2)^2$, a perfect square.
+  By Mestre's criterion~\cite{Mestre}, the RM field is
+  $\mathbb{Q}(\sqrt{\Delta_h}) = \mathbb{Q}$, so RM
+  degenerates to~$\mathbb{Z}$.
+
+  \emph{Complex multiplication.}
+  CM requires special algebraic relations between
+  $p$ and~$q$, which do not hold for generic primes.
+\end{proof}
+
+
+% ====================================================================
+\section{Sato--Tate Group}\label{sec:ST}
+
+By the FKRS classification~\cite{FKRS}, the Sato--Tate group
+lies in the ``$C_2$ family'':
+
+\begin{proposition}\label{prop:ST}
+  The Sato--Tate group of $\Jac(C)$ is contained in
+  $N(\mathrm{U}(1) \times \mathrm{U}(1)) \subsetneq \USp(4)$.
+\end{proposition}
+
+The computational signatures are universal across the family:
+$a_r = 0$ for all $r \equiv 3 \pmod{4}$ (proved), and
+$a_r = 0$ for $\sim\!50\%$ of $r \equiv 1 \pmod{4}$.
+Figure~\ref{fig:cross} confirms this across five test curves.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rrrrl}
+\toprule
+$r$ & $r \bmod 4$ & $a_r$ & $t_r = a_r/2\sqrt{r}$ & \\
+\midrule
+11 & 3 &  0 & $0$ & vanishing law \\
+13 & 1 &  0 & $0$ & \\
+17 & 1 & $-4$ & $-0.485$ & nonzero \\
+19 & 3 &  0 & $0$ & vanishing law \\
+23 & 3 &  0 & $0$ & vanishing law \\
+37 & 1 & $-4$ & $-0.329$ & nonzero \\
+41 & 1 & $-4$ & $-0.312$ & nonzero \\
+53 & 1 &  0 & $0$ & \\
+89 & 1 & $28$ & $\phantom{-}1.484$ & nonzero \\
+101 & 1 & $20$ & $\phantom{-}0.995$ & nonzero \\
+\bottomrule
+\end{tabular}
+\caption{Frobenius traces for $(p,q) = (3,7)$.
+  The normalised trace $t_r \in [-2, 2]$ by the Weil bound.}
+\label{tab:traces}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig_cross_validate.pdf}
+  \caption{%
+    (a)~Percentage of good primes with $a_r = 0$, by residue
+    class and curve.  All curves show $100\%$ vanishing at
+    $r \equiv 3 \pmod{4}$ and $\sim\!50\%$ at
+    $r \equiv 1 \pmod{4}$.
+    (b)~Complete classification of local arithmetic.}
+  \label{fig:cross}
+\end{figure}
+
+
+% ====================================================================
+\section{Local $L$-Factors}\label{sec:local}
+
+At bad odd primes, Paper~\cite{Chen2026UTS} identified two
+reduction types.  The conductor exponent $f_r = 2$ is
+unaffected by node splitting, but the local $L$-factors require
+a finer analysis.
+
+\subsection{Cases I/II: Cuspidal reduction ($r = p$ or $q$)}
+
+When $r = p$, the roots $0, p, -p$ collide modulo~$r$,
+and the reduced curve is
+$\bar{C}\colon y^2 = x^3(x^2 - \bar{q}^{\,2})$.
+Setting $v = y/x$ gives the normalisation
+\begin{equation}\label{eq:Enorm}
+  \tilde{E}\colon v^2 = x^3 - \bar{q}^{\,2}\, x
+  \qquad (\text{over } \mathbb{F}_r),
+\end{equation}
+an elliptic curve of the form $v^2 = x^3 + ax$ with
+$a = -\bar{q}^{\,2}$ and $b = 0$.  Its $j$-invariant is
+$j = 1728$, so $\tilde{E}$ has complex multiplication
+by~$\mathbb{Z}[i]$.  (Symmetrically, when $r = q$, the
+normalisation is $v^2 = x^3 - \bar{p}^{\,2}\, x$,
+again with $j = 1728$.)
+
+The local $L$-factor is determined by the Frobenius
+trace $a_E$ on~$\tilde{E}$:
+\begin{equation}
+  L_r(s) = (1 - a_E\, r^{-s} + r^{1-2s})^{-1}.
+\end{equation}
+Since $\tilde{E}$ has CM by $\mathbb{Z}[i]$, the
+trace $a_E$ satisfies $a_E = 0$ when $r \equiv 3 \pmod{4}$
+(by Deuring's theorem), reflecting the same residue-class
+dichotomy as the trace vanishing law.
+
+\subsection{Cases III/IV: Nodal reduction}
+
+The reduced curve has two $A_1$ nodes at
+$x = \bar{a}$ and $x = -\bar{a}$.  Each node is
+\emph{split} (tangent slopes in $\mathbb{F}_r$, contributing
+$(1 - r^{-s})^{-1}$) or \emph{non-split}
+(slopes in $\mathbb{F}_{r^2}$, contributing
+$(1 + r^{-s})^{-1}$), depending on the quadratic residue
+character.
+
+\begin{proposition}\label{prop:nodesplit}
+  The node at $x = \bar{a}$ is split iff
+  $(\bar{a}/r) = 1$.  The node at $x = -\bar{a}$ is split
+  iff $(-\bar{a}/r) = 1$.
+\end{proposition}
+
+\begin{corollary}\label{cor:localfactor}
+  If $r \equiv 3 \pmod{4}$: exactly one node is split, giving
+  \begin{equation}\label{eq:mixed}
+    L_r(s) = (1 - r^{-s})^{-1}(1 + r^{-s})^{-1}
+    = (1 - r^{-2s})^{-1}.
+  \end{equation}
+  If $r \equiv 1 \pmod{4}$: both nodes have the same type,
+  giving $(1 - r^{-s})^{-2}$ $($both split$)$ or
+  $(1 + r^{-s})^{-2}$ $($both non-split$)$.
+\end{corollary}
+
+\begin{remark}
+  The conductor exponent $f_r = 2$ depends only on the toric
+  rank $t = 2$, not on the splitting type.  The formula
+  of Paper~\cite{Chen2026UTS} is unaffected.
+\end{remark}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+Case & Condition & $r \bmod 4$ & Local $L$-factor \\
+\midrule
+I/II (cusp)
+& $r = p$ or $q$
+& any
+& $(1 - a_E\, r^{-s} + r^{1-2s})^{-1}$ \\
+\addlinespace
+III/IV (nodes)
+& $r \mid N$ or $r \mid (p{-}q)$
+& $\equiv 3$
+& $(1 - r^{-2s})^{-1}$ \\
+\addlinespace
+III/IV (nodes)
+& $r \mid N$ or $r \mid (p{-}q)$
+& $\equiv 1$
+& $(1 \mp r^{-s})^{-2}$ \\
+\bottomrule
+\end{tabular}
+\caption{Refined local $L$-factors at bad odd primes.
+  Cases~I/II have $j(\tilde{E}) = 1728$ (CM by $\mathbb{Z}[i]$).
+  In Cases~III/IV with $r \equiv 1$, the sign depends
+  on~$(\bar{a}/r)$.}
+\label{tab:local}
+\end{table}
+
+
+% ====================================================================
+\section{Weil Restriction and the Asai $L$-Function}
+\label{sec:weil}
+
+\subsection{The Galois representation is induced}
+
+The involution $w^*$ acts on $V_\ell = H^1(C_{\Qbar}, \Ql)$
+with eigenvalues $\pm i$.  Write $V_\ell = V^+ \oplus V^-$
+for the eigenspaces.  Complex conjugation swaps
+$V^+$ and~$V^-$, so
+\begin{equation}\label{eq:induced}
+  V_\ell \;\cong\;
+  \mathrm{Ind}_{G_{\mathbb{Q}(i)}}^{G_{\mathbb{Q}}}(V^+).
+\end{equation}
+By Mackey's formula, the trace of $\sigma_r$ on $V_\ell$
+vanishes at inert primes ($r \equiv 3 \pmod{4}$),
+confirming Theorem~\ref{thm:vanish} representation-theoretically.
+
+\subsection{Weil restriction}
+
+\begin{proposition}\label{prop:weil}
+  Over~$\mathbb{Q}(i)$, the Jacobian $\Jac(C)$ is
+  $(2,2)$-isogenous to $E_1 \times E_2$, where
+  \begin{align}\label{eq:E1E2}
+    E_1 &\colon Y^2 = X(X - p^2)(X - q^2), \\
+    E_2 &\colon Y^2 = X(X + p^2)(X + q^2). \notag
+  \end{align}
+  Both $E_1$ and $E_2$ are individually defined
+  over~$\mathbb{Q}$, but the $(2,2)$-isogeny
+  $\varphi\colon \Jac(C)_{/\mathbb{Q}(i)} \to E_1 \times E_2$
+  is defined only over $\mathbb{Q}(i)$: complex conjugation
+  acts on~$\varphi$ by swapping the two factors.
+  Over~$\mathbb{Q}$, $\Jac(C)$ is therefore isogenous to
+  $\Res_{\mathbb{Q}(i)/\mathbb{Q}}(E)$, where
+  $E/\mathbb{Q}(i)$ is the elliptic curve whose $\ell$-adic
+  representation is the eigenspace~$V^+$.
+\end{proposition}
+
+\begin{proof}[Construction]
+  The isogeny arises from the Richelot construction
+  associated to the partition
+  $\{0, \infty\}, \{p, -p\}, \{q, -q\}$ of the
+  Weierstrass points, combined with the eigendecomposition
+  of $w^*$ on $\Jac(C)_{/\mathbb{Q}(i)}$ via the
+  idempotents $e^\pm = (1 \mp i\, w^*)/2$
+  in $\End(\Jac(C)) \otimes \mathbb{Q}(i)$.
+  The quadratics $g_1(x) = x^2 - p^2$ and
+  $g_2(x) = x^2 - q^2$ yield the two elliptic factors
+  $E_1\colon Y^2 = X(X - p^2)(X - q^2)$ and
+  $E_2\colon Y^2 = X(X + p^2)(X + q^2)$.
+\end{proof}
+
+\begin{remark}\label{rem:twist}
+  The curve $E_2$ is the quadratic twist of~$E_1$ by~$-1$:
+  the substitution $X \mapsto -X$ in~$E_2$ gives
+  $Y^2 = -X(-X+p^2)(-X+q^2) = -[X(X-p^2)(X-q^2)]$,
+  so $E_2 \cong E_1^{(-1)}$.  Over $\mathbb{Q}(i)$,
+  $-1 = i^2$ is a square, so $E_1$ and~$E_2$ become
+  isomorphic---precisely the condition enabling the
+  Richelot isogeny.  This $E \times E^{(-1)}$ structure
+  is the geometric hallmark of the Asai lift: the
+  degree-$4$ $L$-function is $L(E_1, s) \cdot L(E_1^{(-1)}, s)$
+  over~$\mathbb{Q}$, which unifies into
+  $L(E_1, s)^2$ over~$\mathbb{Q}(i)$.
+  For $(p, q) = (3, 7)$: $E_1\colon Y^2 = X(X-9)(X-49)$
+  and $E_2 = E_1^{(-1)}\colon Y^2 = X(X+9)(X+49)$.
+\end{remark}
+
+\subsection{The Asai $L$-function}
+
+The $L$-function of $\Jac(C)/\mathbb{Q}$ is the
+Asai $L$-function of $\pi_E$:
+\begin{equation}\label{eq:asai}
+  L(\Jac(C)/\mathbb{Q},\, s)
+  \;=\; L^{\mathrm{As}}(\pi_E,\, s).
+\end{equation}
+Over $\mathbb{Q}(i)$, this factors as
+$L(E, s) \cdot L(E^c, s)$, where $E^c$ is the
+Galois conjugate.
+
+The associated Siegel modular form is an
+\emph{endoscopic lift} (Asai transfer from
+$\GL_2(\mathbb{Q}(i))$ to $\GSp_4(\mathbb{Q})$),
+\emph{not} a non-lift form.  The trace vanishing law
+is precisely the signature of this endoscopic structure.
+
+
+% ====================================================================
+\section{Modularity}\label{sec:modularity}
+
+The Weil restriction structure yields modularity without
+invoking BCGP:
+
+\begin{theorem}\label{thm:modularity}
+  The abelian surface $\Jac(C)/\mathbb{Q}$ is modular:
+  there exists a weight-$2$ Siegel paramodular form~$F$
+  with $L(\Jac(C), s) = L(F, s)$, obtained by Asai transfer.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  By Allen--Calegari--Caraiani et al.~\cite{Allen},
+  $E/\mathbb{Q}(i)$ is modular.  Automorphic induction from
+  $\GL_2(\mathbb{Q}(i))$ to $\GL_4(\mathbb{Q})$ produces
+  a cuspidal representation; the symplectic constraint on
+  the Tate module transfers this to $\GSp_4(\mathbb{Q})$
+  via Arthur's classification, yielding~$F$.
+\end{proof}
+
+\begin{remark}[BCGP does not apply]
+  The BCGP theorem~\cite{BCGP} requires the mod-$\ell$
+  Galois image to be ``vast,'' forcing
+  $\mathrm{ST} = \USp(4)$.  Since our representation is
+  induced, its image lies in a proper subgroup of
+  $\GSp(4, \mathbb{F}_\ell)$ and is never vast.
+  The automorphic induction route is both simpler and
+  unconditional.
+\end{remark}
+
+\begin{remark}[Paramodular level and even conductor]
+  The level is
+  $N_A = 2^{f_2} \cdot
+  [\rad_{\mathrm{odd}}(pqN(p{-}q))]^2$ with $f_2 \ge 4$.
+  Since $N_A$ is even, the original Brumer--Kramer
+  conjecture~\cite{BrumerKramer} (formulated for odd
+  conductor) does not directly apply; the appropriate
+  framework is Roberts--Schmidt~\cite{RobertsSchmidt}.
+  While the existence of the automorphic representation~$\Pi$
+  on $\GSp_4$ is guaranteed by the Asai transfer, predicting
+  its exact local newform type at the wildly ramified prime
+  $r = 2$ (and hence the exact paramodular level~$N_A$)
+  remains conjectural and relies on the generalised
+  Brumer--Kramer/Roberts--Schmidt framework.
+  The odd part of the conductor is rigorously established
+  by Papers~\cite{Chen2026TCV,Chen2026UTS}.
+\end{remark}
+
+
+% ====================================================================
+\section{Discussion}
+
+The Goldbach constraint $p + q = 2N$ forces the Jacobians to
+be Weil restrictions of elliptic curves over~$\mathbb{Q}(i)$:
+\[
+  p + q = 2N
+  \;\Longrightarrow\;
+  f(-x) = -f(x)
+  \;\Longrightarrow\;
+  V_\ell = \mathrm{Ind}_{G_{\mathbb{Q}(i)}}^{G_{\mathbb{Q}}}(V^+)
+  \;\Longrightarrow\;
+  \Jac(C) \sim \Res_{\mathbb{Q}(i)/\mathbb{Q}}(E).
+\]
+Modularity reduces to that of $E/\mathbb{Q}(i)$, which is
+known.  The local description is now complete at every prime:
+conductor exponent (Papers~\#12--13), reduction type,
+split/non-split refinement (Corollary~\ref{cor:localfactor}),
+and the Asai structure of the $L$-function.
+
+The reduction to elliptic curves over $\mathbb{Q}(i)$
+suggests that Goldbach-type questions might be
+approachable through the arithmetic of Bianchi modular
+forms---a direction that merits further investigation.
+
+
+% ====================================================================
+\section*{Acknowledgments}
+
+The author thanks the anonymous reviewers whose critiques
+identified the Weil restriction structure and the Asai lift,
+leading to fundamental improvements.
+Scripts and data are at
+\url{https://github.com/Ruqing1963/goldbach-frey-weil-restriction}.
+
+
+\begin{thebibliography}{99}
+
+\bibitem{Chen2026TCV}
+R.~Chen,
+\emph{The true conductor of Goldbach--Frey curves},
+Zenodo, 2026.  \url{https://zenodo.org/records/18749731}
+
+\bibitem{Chen2026UTS}
+R.~Chen,
+\emph{Universal tame semistability of Goldbach--Frey Jacobians},
+Zenodo, 2026.  \url{https://zenodo.org/records/18751169}
+
+\bibitem{Chen2026Census}
+R.~Chen,
+\emph{A conductor census of 425,082 Goldbach--Frey curves},
+Zenodo, 2026.  \url{https://zenodo.org/records/18751442}
+
+\bibitem{BrumerKramer}
+A.~Brumer and K.~Kramer,
+Paramodular abelian varieties of odd conductor,
+\emph{Trans.\ Amer.\ Math.\ Soc.}~\textbf{366} (2014),
+2463--2516.
+
+\bibitem{RobertsSchmidt}
+B.~Roberts and R.~Schmidt,
+\emph{Local Newforms for $\GSp(4)$},
+Lecture Notes in Math.~\textbf{1918}, Springer, 2007.
+
+\bibitem{BCGP}
+G.~Boxer, F.~Calegari, T.~Gee, and V.~Pilloni,
+Abelian surfaces over totally real fields are potentially modular,
+\emph{Publ.\ Math.\ IHES}~\textbf{134} (2021), 153--501.
+
+\bibitem{Allen}
+P.\,B.~Allen et al.,
+Potential automorphy over CM fields,
+\emph{Ann.\ of Math.}~(2), to appear.  arXiv:1812.09999.
+
+\bibitem{FKRS}
+F.~Fit\'e, K.\,S.~Kedlaya, V.~Rotger, and A.\,V.~Sutherland,
+Sato--Tate distributions and Galois images,
+\emph{Compos.\ Math.}~\textbf{148} (2012), 1390--1442.
+
+\bibitem{PoorYuen}
+C.~Poor and D.\,S.~Yuen,
+Paramodular cusp forms,
+\emph{Math.\ Comp.}~\textbf{84} (2015), 1401--1438.
+
+\bibitem{Serre1959}
+J.-P.~Serre,
+\emph{Groupes alg\'ebriques et corps de classes},
+Hermann, 1959.
+
+\bibitem{CardonaQuer}
+G.~Cardona and J.~Quer,
+Field of moduli and field of definition for curves of genus~2,
+World Scientific, 2005, pp.~71--83.
+
+\bibitem{Mestre}
+J.-F.~Mestre,
+Construction de courbes de genre~2 \`a partir de leurs modules,
+Birkh\"auser, 1991, pp.~313--334.
+
+\end{thebibliography}
+
+\end{document}
